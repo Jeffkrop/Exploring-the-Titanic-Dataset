@@ -62,7 +62,19 @@ full$Surname <- sapply(full$Name,
 ```      
 ```{r results='asis'}
 cat(paste('There are', nlevels(factor(full$Surname)), 'unique surnames.'))
+```
+
+I want to look at some variables to see how who serviced and dies. 
+```{r}
+#lived or dies male vs female
+table(full$Sex, full$Survived)
+#how about class
+table(full$Pclass, full$Survived)
+#how about age
+table(full$Age, full$Survived) # Need to do some work with age. 
 ```   
+looking at these tables 73% of women survived and 18% of males survived, 62% of the first class pasengers survived, 47% in second class survived and 24% in thrid class survived. 
+
 Now I want to make a new family variable.   
 ```{r}
 # Create a family size variable including the passenger themselves
