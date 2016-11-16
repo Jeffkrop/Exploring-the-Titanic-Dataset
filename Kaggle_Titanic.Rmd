@@ -71,7 +71,7 @@ table(full$Sex, full$Survived)
 #how about class
 table(full$Pclass, full$Survived)
 #how about age
-table(full$Age, full$Survived) # Need to do some work with age.
+#table(full$Age, full$Survived) # Need to do some work with age.
 
 ```   
 looking at these tables 73% of women survived and 18% of males survived, 62% of the first class pasengers survived, 47% in second class survived and 24% in thrid class survived. 
@@ -85,20 +85,19 @@ full$family_size <- full$SibSp + full$Parch + 1
 full$Family <- paste(full$Surname, full$family_size, sep='_')
 ```
    
-```{r}
-ggplot(full, aes(x = family_size, fill = factor(Survived))) +
-  geom_bar(stat='count', position='dodge') +
-  scale_x_continuous(breaks=c(1:11)) +
-  labs(x = 'Family Size') +
-  theme_few()
-```
 I want to make family size single, small or large. 
 ```{r, message=FALSE, warning=FALSE}
-#Discretize family size
+full$family_size[full$family_size >= 5] <- 'large'
 full$family_size[full$family_size == 1] <- 'single'
-full$family_size[full$family_size <= 4 & family_size > 1] <- 'small'
-full$family_size[full$family_size > 4] <- 'large'
-```
+full$family_size[full$family_size <= 4 & full$family_size >= 2] <- 'small'
+
+```   
+   
+I want to see how many people survived from each family size.
+```{r}
+table(full$family_size, full$Survived)
+```   
+Looking at this table it looks lije if you were in a small family you were more likely to survive.  
 
 
 
