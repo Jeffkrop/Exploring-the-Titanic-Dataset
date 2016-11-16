@@ -1,0 +1,60 @@
+---
+title: "Titanic_kaggle"
+author: "Jeff Kropelnicki"
+date: "11/16/2016"
+output: html_document
+  
+---
+
+```{r message=FALSE, warning=FALSE}
+
+library('ggplot2') # visualization
+library('ggthemes') # visualization
+library('scales') # visualization
+library('dplyr') # data manipulation
+library('mice') # imputation
+library('randomForest') # classification algorithm
+```
+
+
+Load data, bind the two together and show data. 
+```{r, message=FALSE, warning=FALSE}
+train <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/kaggle_Titanic/train.csv", stringsAsFactors = F)
+test <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/kaggle_Titanic/test.csv", stringsAsFactors = F)
+full <- bind_rows(train, test) #binds train and test 
+str(full)
+```   
+    
+|**Variable Name** |**Description**                 
+| :------------- |------------------------
+| Survived      | [0] = Died [1] = Survived 
+| Pclass        | Passenger's class           
+| Name          | Passenger's name         
+| Sex           | Passenger"s sex          
+| Age           | Passenger's name
+| SibSp         | Number of siblings/spouses aboard
+| Parch         | Number of parents/children aboard
+| Ticket        | Ticket number 
+| Fare          | Fare
+| Cabin         | Cabin
+| Embarked      | Port of embarkation   
+   
+Looking at the names we can see that some have Mr, Mrs, Master, Miss. A quest we could ask is does this say anything about the passengers class? If we pull out the title this will give us a new varible. We could also use sir name to look for family so I will pull that too.   
+
+
+```{r}
+# Get title from name 
+full$Title <- gsub('(.*, )|(\\..*)', '', full$Name)
+# Show title count by sex   
+table(full$Sex, full$Title)   
+# Combinding tiltle with low counts. 
+rare_title <- c("Capt", "Col", "Don", "Dona", "Dr", "Jonkheer", "Lady", "Major", "Rev", "Sir", "the Countess")   
+# Reassign mlle, ms, and mme accordingly   
+full$Title[full$Title == 'Mlle']  <- "Miss"
+full$Title[full$Title == "ms"] <- "Miss"
+full$Title[full$Title == "mme"] <- "Mrs"
+full$Title[full$Title %in% rare_title] <- "Rare Title"
+# looking at the changes made to the table above
+table(full$Sex, full$Title) 
+```
+
