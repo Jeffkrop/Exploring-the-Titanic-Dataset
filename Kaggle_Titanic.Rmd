@@ -62,7 +62,16 @@ full$Surname <- sapply(full$Name,
 ```      
 ```{r results='asis'}
 cat(paste('There are', nlevels(factor(full$Surname)), 'unique surnames.'))
+```   
+Now I want to make a new family varible.   
+```{r}
+# Create a family size variable including the passenger themselves
+Temp_family_size <- full$SibSp + full$Parch + 1
+# Create a family variable 
+full$Family <- paste(full$Surname, full$Fsize, sep='_')
+
 ```
+
 
 
 
