@@ -71,7 +71,8 @@ table(full$Sex, full$Survived)
 #how about class
 table(full$Pclass, full$Survived)
 #how about age
-table(full$Age, full$Survived) # Need to do some work with age. 
+table(full$Age, full$Survived) # Need to do some work with age.
+
 ```   
 looking at these tables 73% of women survived and 18% of males survived, 62% of the first class pasengers survived, 47% in second class survived and 24% in thrid class survived. 
 
@@ -85,19 +86,18 @@ full$Family <- paste(full$Surname, full$family_size, sep='_')
 ```
    
 ```{r}
-ggplot(full[1:1309,], aes(x = family_size, fill = factor(Survived))) +
+ggplot(full, aes(x = family_size, fill = factor(Survived))) +
   geom_bar(stat='count', position='dodge') +
   scale_x_continuous(breaks=c(1:11)) +
   labs(x = 'Family Size') +
   theme_few()
 ```
-
+I want to make family size single, small or large. 
 ```{r, message=FALSE, warning=FALSE}
-# Discretize family size
-#full$family_size[full$family_size == 1] <- 'single'
-#full$family_size[full$family_size < 5 & family_size > 1] <- 'small'
-#full$family_size[full$family_size > 4] <- 'large'
-
+#Discretize family size
+full$family_size[full$family_size == 1] <- 'single'
+full$family_size[full$family_size <= 4 & family_size > 1] <- 'small'
+full$family_size[full$family_size > 4] <- 'large'
 ```
 
 
