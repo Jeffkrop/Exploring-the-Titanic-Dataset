@@ -87,18 +87,31 @@ full$Family <- paste(full$Surname, full$family_size, sep='_')
    
 I want to make family size single, small or large. 
 ```{r, message=FALSE, warning=FALSE}
-full$family_size[full$family_size >= 5] <- 'large'
-full$family_size[full$family_size == 1] <- 'single'
-full$family_size[full$family_size <= 4 & full$family_size >= 2] <- 'small'
+full$family_sizeD[full$family_size >= 5] <- 'large'
+full$family_sizeD[full$family_size == 1] <- 'single'
+full$family_sizeD[full$family_size <= 4 & full$family_size >= 2] <- 'small'
+```    
 
-```   
    
 I want to see how many people survived from each family size.
 ```{r}
-table(full$family_size, full$Survived)
+table(full$family_sizeD, full$Survived)
 ```   
-Looking at this table it looks lije if you were in a small family you were more likely to survive.  
+Looking at this table it looks lije if you were in a small family you were more likely to survive.     
+     
+No I want to look at a mosaic plot. A mosaic plot shows all three single, small, and large on the same plot and show a [0] for died and a [1] for survived.  
+```{r}
+mosaicplot(table(full$family_sizeD, full$Survived), main='Family Size by Survival', shade=TRUE)
+```     
 
+Looking at this mosaic plot it is clear to see that being in a small family was best. 
+
+```{r}
+
+```
+
+
+ 
 
 
 
