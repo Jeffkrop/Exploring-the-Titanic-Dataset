@@ -19,8 +19,8 @@ library('randomForest') # classification algorithm
 
 Load data, bind the two together and show data. 
 ```{r, message=FALSE, warning=FALSE}
-train <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/kaggle_Titanic/train.csv", stringsAsFactors = F)
-test <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/kaggle_Titanic/test.csv", stringsAsFactors = F)
+train <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/Exploring the Titanic Dataset/train.csv", stringsAsFactors = F)
+test <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/Exploring the Titanic Dataset/test.csv", stringsAsFactors = F)
 full <- bind_rows(train, test) #binds train and test 
 str(full)
 ```   
@@ -56,5 +56,24 @@ full$Title[full$Title == "mme"] <- "Mrs"
 full$Title[full$Title %in% rare_title] <- "Rare Title"
 # looking at the changes made to the table above
 table(full$Sex, full$Title) 
+ # now I want to look at sir names   
+full$Surname <- sapply(full$Name,  
+                      function(x) strsplit(x, split = '[,.]')[[1]][1])
+```      
+```{r results='asis'}
+cat(paste('There are', nlevels(factor(full$Surname)), 'unique surnames.'))
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
