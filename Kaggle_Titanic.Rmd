@@ -104,11 +104,25 @@ No I want to look at a mosaic plot. A mosaic plot shows all three single, small,
 mosaicplot(table(full$family_sizeD, full$Survived), main='Family Size by Survival', shade=TRUE)
 ```     
 
-Looking at this mosaic plot it is clear to see that being in a small family was best. 
-
+Looking at this mosaic plot it is clear to see that being in a small family advatage. There was a large penalty for being in a large family and medum for single.     
+    
+   
+I know that there is a lot of missing data in for the cabins.   
+```{r}
+full$Cabin[1:25]
+strsplit(full$Cabin[2], NULL)[[1]]
+full$Deck <- factor(sapply(full$Cabin, function(x) strsplit(x, NULL)[[1]][1]))
+```   
+This still leaves a lot of missing data but maybe it will help.   
+   
+There is missing data in Embarkment this is where the example I am working from gets into some prediction. The sample size is small to start deleting row or columns for missing data. I could use mean, medain or mode to find the age and far cost but I will learn prediction here.    
+   
 ```{r}
 
 ```
+
+
+
 
 
  
