@@ -19,8 +19,8 @@ library('randomForest') # classification algorithm
 
 Load data, bind the two together and show data. 
 ```{r, message=FALSE, warning=FALSE}
-train <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/Exploring the Titanic Dataset/train.csv", stringsAsFactors = F)
-test <- read.csv("/Users/jeffkropelnicki/Documents/kaggle/Exploring the Titanic Dataset/test.csv", stringsAsFactors = F)
+train <- read.csv("/Users/jeffkropelnicki/Documents/R_codes/kaggle/Exploring the Titanic Dataset/train.csv", stringsAsFactors = F)
+test <- read.csv("/Users/jeffkropelnicki/Documents/R_codes/kaggle/Exploring the Titanic Dataset/test.csv", stringsAsFactors = F)
 full <- bind_rows(train, test) #binds train and test 
 str(full)
 ```   
@@ -39,7 +39,7 @@ str(full)
 | Cabin         | Cabin
 | Embarked      | Port of embarkation   
    
-Looking at the names we can see that some have Mr, Mrs, Master, Miss. A quest we could ask is does this say anything about the passengers class? If we pull out the title this will give us a new varible. We could also use sir name to look for family so I will pull that too.   
+Looking at the names we can see that some have Mr, Mrs, Master, Miss. A quest we could ask is does this say anything about the passengers class? If we pull out the title this will give us a new variable. We could also use sir name to look for family so I will pull that too.   
 
 
 ```{r}
@@ -63,9 +63,10 @@ full$Surname <- sapply(full$Name,
 ```{r results='asis'}
 cat(paste('There are', nlevels(factor(full$Surname)), 'unique surnames.'))
 ```   
-Now I want to make a new family varible.   
+Now I want to make a new family variable.   
 ```{r}
 # Create a family size variable including the passenger themselves
+
 full$family_size <- full$SibSp + full$Parch + 1
 # Create a family variable 
 full$Family <- paste(full$Surname, full$family_size, sep='_')
@@ -80,13 +81,13 @@ ggplot(full[1:1309,], aes(x = family_size, fill = factor(Survived))) +
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-
 # Discretize family size
-full$family_size[full$family_size == 1] <- 'single'
-full$family_size[full$family_size < 5 & family_size > 1] <- 'small'
-full$family_size[full$family_size > 4] <- 'large'
-family_size
+#full$family_size[full$family_size == 1] <- 'single'
+#full$family_size[full$family_size < 5 & family_size > 1] <- 'small'
+#full$family_size[full$family_size > 4] <- 'large'
+
 ```
+
 
 
 
