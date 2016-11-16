@@ -62,7 +62,32 @@ full$Surname <- sapply(full$Name,
 ```      
 ```{r results='asis'}
 cat(paste('There are', nlevels(factor(full$Surname)), 'unique surnames.'))
+```   
+Now I want to make a new family varible.   
+```{r}
+# Create a family size variable including the passenger themselves
+full$family_size <- full$SibSp + full$Parch + 1
+# Create a family variable 
+full$Family <- paste(full$Surname, full$family_size, sep='_')
 ```
+   
+```{r}
+ggplot(full[1:1309,], aes(x = family_size, fill = factor(Survived))) +
+  geom_bar(stat='count', position='dodge') +
+  scale_x_continuous(breaks=c(1:11)) +
+  labs(x = 'Family Size') +
+  theme_few()
+```
+
+```{r, message=FALSE, warning=FALSE}
+
+# Discretize family size
+full$family_size[full$family_size == 1] <- 'single'
+full$family_size[full$family_size < 5 & family_size > 1] <- 'small'
+full$family_size[full$family_size > 4] <- 'large'
+family_size
+```
+
 
 
 
